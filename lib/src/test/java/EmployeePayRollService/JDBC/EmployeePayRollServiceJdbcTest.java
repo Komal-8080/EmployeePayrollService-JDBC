@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import org.junit.Assert;
 import org.junit.Test;
@@ -97,6 +98,15 @@ public class EmployeePayRollServiceJdbcTest {
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService
 				.readEmployeePayrollForDateRange(EmployeePayRollServiceJdbc.IOService.DB_IO,startDate,endDate);
 		Assert.assertEquals(3, employeePayrollData.size());		
+	}
+	
+	@Test
+	public void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
+		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> averageSalaryByGender = employeePayrollService.readAverageSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Assert.assertTrue(averageSalaryByGender.get("M").equals(200000.0) &&
+				averageSalaryByGender.get("F").equals(300000.00));
 	}
 }
 
