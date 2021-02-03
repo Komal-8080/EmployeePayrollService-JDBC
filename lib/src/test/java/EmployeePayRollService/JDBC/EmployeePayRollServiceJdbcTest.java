@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -69,10 +70,22 @@ public class EmployeePayRollServiceJdbcTest {
 	}
 
 	@Test
-	public void givenEmployeePayrollInDB_WhenRetrived_ShouldMatchEmployeeCount() {
+	public void givenEmployeePayrollInDB_WhenRetrived_ShouldMatchEmployeeCount() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService
-				.readEmployeePayrollData(EmployeePayRollServiceJdbc.IOService.DB_IO);
+				.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Assert.assertEquals(3, employeePayrollData.size());
 	}
+	
+	@Test
+	public void givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB() throws SQLException {
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService
+				.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		employeePayrollService.updateEmployeeSalary("Terisa", 300000.00);
+		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
+		Assert.assertTrue(result);
+	}
 }
+
+
