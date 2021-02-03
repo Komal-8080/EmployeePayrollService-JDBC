@@ -48,7 +48,6 @@ public class EmployeePayRollServiceJdbcTest {
 		Files.newDirectoryStream(playPath).forEach(System.out::println);
 		Files.newDirectoryStream(playPath, path -> path.toFile().isFile() && path.toString().startsWith("temp"))
 				.forEach(System.out::println);
-		;
 	}
 
 	@Test
@@ -76,5 +75,4 @@ public class EmployeePayRollServiceJdbcTest {
 				.readEmployeePayrollData(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Assert.assertEquals(3, employeePayrollData.size());
 	}
-
 }

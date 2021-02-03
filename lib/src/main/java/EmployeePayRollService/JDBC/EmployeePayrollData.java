@@ -16,6 +16,7 @@ public class EmployeePayrollData {
 		this.salary = salary;
 	}
 
+	// Constructor to add StartDate
 	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate) {
 		this(id, name, salary);
 		this.startDate = startDate;
@@ -27,6 +28,7 @@ public class EmployeePayrollData {
 		return "id= " + id + ", name= " + name + ", salary= " + salary;
 	}
 
+	// Equals method
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

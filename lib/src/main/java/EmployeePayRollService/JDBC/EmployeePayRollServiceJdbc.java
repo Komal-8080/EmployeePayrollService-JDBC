@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class EmployeePayRollServiceJdbc {
 
-	private EmployeePayrollDBService employeePayrollDBService;
-
 	// Enum method to put constants
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
@@ -21,6 +19,7 @@ public class EmployeePayRollServiceJdbc {
 		this.employeePayrollList = employeePayrollList;
 	}
 
+	//Constructor for testcase givenEmployeePayrollInDB_WhenRetrived_ShouldMatchEmployeeCount()
 	public EmployeePayRollServiceJdbc() {
 	}
 
