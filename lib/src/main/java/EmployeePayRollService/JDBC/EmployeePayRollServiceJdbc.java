@@ -1,10 +1,7 @@
 package EmployeePayRollService.JDBC;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.time.LocalDate;
-=======
->>>>>>> aef611c8b6936ac690d9961aa58fb6018e1a9edf
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,14 +26,7 @@ public class EmployeePayRollServiceJdbc {
 		this();
 		this.employeePayrollList = employeePayrollList;
 	}
-
-<<<<<<< HEAD
-=======
-	public EmployeePayRollServiceJdbc() {
-		employeePayrollDBService = EmployeePayrollDBService.getInstance();
-	}
-
->>>>>>> aef611c8b6936ac690d9961aa58fb6018e1a9edf
+	
 	// Read method to take employee data from console
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.print("Enter Employee ID: ");
@@ -98,7 +88,6 @@ public class EmployeePayRollServiceJdbc {
 		if (ioService.equals(IOService.FILE_IO))
 			new EmployeePayrollFileIOService().printData();
 	}
-<<<<<<< HEAD
 	
 	public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate,
 			LocalDate endDate) {
@@ -106,6 +95,4 @@ public class EmployeePayRollServiceJdbc {
 			return employeePayrollDBService.getEmployeePayrollForDateRange(startDate, endDate);
 		return null;
 	}
-=======
->>>>>>> aef611c8b6936ac690d9961aa58fb6018e1a9edf
 }
