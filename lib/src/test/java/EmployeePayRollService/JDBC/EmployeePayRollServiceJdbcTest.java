@@ -5,7 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.time.LocalDate;
+=======
+>>>>>>> aef611c8b6936ac690d9961aa58fb6018e1a9edf
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -87,6 +90,7 @@ public class EmployeePayRollServiceJdbcTest {
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
 	}
+<<<<<<< HEAD
 	
 	@Test
 	public void givenDateRange_WhenRetirieved_ShouldMatchEmployeeCount() throws SQLException {
@@ -98,6 +102,8 @@ public class EmployeePayRollServiceJdbcTest {
 				.readEmployeePayrollForDateRange(EmployeePayRollServiceJdbc.IOService.DB_IO,startDate,endDate);
 		Assert.assertEquals(3, employeePayrollData.size());		
 	}
+=======
+>>>>>>> aef611c8b6936ac690d9961aa58fb6018e1a9edf
 }
 
 
