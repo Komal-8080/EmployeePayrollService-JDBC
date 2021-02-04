@@ -102,8 +102,33 @@ public class EmployeePayRollServiceJdbc {
 			return employeePayrollDBService.getAverageSalaryByGender();
 		return null;
 	}
+	
+	public Map<String, Double> readSumOfSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			return employeePayrollDBService.getSumOfSalaryByGender();
+		return null;
+	}
+	
+	public Map<String, Double> readCountOfSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			return employeePayrollDBService.getCountOfSalaryByGender();
+		return null;
+	}
 
+	public Map<String, Double> readMaxOfSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			return employeePayrollDBService.getMaxOfSalaryByGender();
+		return null;
+	}
+
+	public Map<String, Double> readMinOfSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			return employeePayrollDBService.getMinOfSalaryByGender();
+		return null;
+	}
+	
 	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) throws SQLException {
 		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender));
 	}
+
 }

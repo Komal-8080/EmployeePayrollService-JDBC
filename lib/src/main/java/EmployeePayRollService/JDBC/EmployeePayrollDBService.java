@@ -119,17 +119,41 @@ public class EmployeePayrollDBService {
 			e.printStackTrace();
 		}
 		return employeePayrollList;
-	}
+	} 
 
 	public Map<String, Double> getAverageSalaryByGender() {
-		String sql = "SELECT gender,AVG(salary) as avg_salary FROM employee_payroll GROUP BY gender;";
+		String sql = "SELECT gender,AVG(salary) as salary FROM employee_payroll GROUP BY gender;";
+		return this.getSalaryByGender(sql);
+	}
+	
+	public Map<String, Double> getSumOfSalaryByGender() {
+		String sql = "SELECT gender,SUM(salary) as salary FROM employee_payroll GROUP BY gender;";
+		return this.getSalaryByGender(sql);
+	}
+
+	public Map<String, Double> getCountOfSalaryByGender() {
+		String sql = "SELECT gender,COUNT(salary) as salary FROM employee_payroll GROUP BY gender;";
+		return this.getSalaryByGender(sql);
+	}
+
+	public Map<String, Double> getMaxOfSalaryByGender() {
+		String sql = "SELECT gender,MAX(salary) as salary FROM employee_payroll GROUP BY gender;";
+		return this.getSalaryByGender(sql);
+	}
+
+	public Map<String, Double> getMinOfSalaryByGender() {
+		String sql = "SELECT gender,Min(salary) as salary FROM employee_payroll GROUP BY gender;";
+		return this.getSalaryByGender(sql);
+	}
+
+	public Map<String, Double> getSalaryByGender(String sql) {
 		Map<String, Double> genderToAverageSalaryMap = new HashMap<>();
 		try (Connection connection = this.getConnection()) {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			while (result.next()) {
 				String gender = result.getString("gender");
-				Double salary = result.getDouble("avg_salary");
+				Double salary = result.getDouble("salary");
 				genderToAverageSalaryMap.put(gender, salary);
 			}
 		} catch (SQLException e) {
@@ -160,7 +184,8 @@ public class EmployeePayrollDBService {
 		return employeePayrollData;
 	}
 
-	public EmployeePayrollData addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) throws SQLException {
+	public EmployeePayrollData addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender)
+			throws SQLException {
 		int employeeId = -1;
 		Connection connection = null;
 		EmployeePayrollData employeePayrollData = null;
