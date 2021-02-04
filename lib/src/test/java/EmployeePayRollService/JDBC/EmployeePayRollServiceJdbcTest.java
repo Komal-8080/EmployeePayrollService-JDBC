@@ -76,7 +76,8 @@ public class EmployeePayRollServiceJdbcTest {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService
 				.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Assert.assertEquals(3, employeePayrollData.size());
+		System.out.println(employeePayrollData.size());
+		Assert.assertEquals(11, employeePayrollData.size());
 	}
 	
 	@Test
@@ -97,7 +98,8 @@ public class EmployeePayRollServiceJdbcTest {
 		LocalDate endDate = LocalDate.now();
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService
 				.readEmployeePayrollForDateRange(EmployeePayRollServiceJdbc.IOService.DB_IO,startDate,endDate);
-		Assert.assertEquals(3, employeePayrollData.size());		
+		System.out.println(employeePayrollData.size());
+		Assert.assertEquals(13, employeePayrollData.size());		
 	}
 	
 	@Test
@@ -105,7 +107,8 @@ public class EmployeePayRollServiceJdbcTest {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Map<String, Double> averageSalaryByGender = employeePayrollService.readAverageSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Assert.assertTrue(averageSalaryByGender.get("M").equals(200000.0) &&
+		System.out.println(averageSalaryByGender.get("M"));
+		Assert.assertTrue(averageSalaryByGender.get("M").equals(2600000.0) &&
 				averageSalaryByGender.get("F").equals(300000.00));
 	}
 	

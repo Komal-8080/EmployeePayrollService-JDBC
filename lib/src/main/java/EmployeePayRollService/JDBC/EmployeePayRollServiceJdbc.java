@@ -79,16 +79,16 @@ public class EmployeePayRollServiceJdbc {
 				.filter(employeePayrollDataItem -> employeePayrollDataItem.name.equals(name)).findFirst().orElse(null);
 	}
 
-	public long readEmployeePayrollData(IOService ioService) {
+	/*public long readEmployeePayrollData(IOService ioService) {
 		if (ioService.equals(IOService.FILE_IO))
 			this.employeePayrollList = new EmployeePayrollFileIOService().readData();
 		return employeePayrollList.size();
 	}
 
-	public void printData(IOService ioService) {
+	/*public void printData(IOService ioService) {
 		if (ioService.equals(IOService.FILE_IO))
 			new EmployeePayrollFileIOService().printData();
-	}
+	}*/
 	
 	public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate,
 			LocalDate endDate) {
