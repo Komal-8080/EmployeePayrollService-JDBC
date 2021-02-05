@@ -1,13 +1,15 @@
 package EmployeePayRollService.JDBC;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class EmployeePayrollData {
 
 	public int id;
 	public String name;
 	public double salary;
-	private LocalDate startDate;
+	public LocalDate startDate;
+	public int dept;
 
 	// Constructor for employee data
 	public EmployeePayrollData(Integer id, String name, Double salary) {
@@ -17,18 +19,19 @@ public class EmployeePayrollData {
 	}
 
 	// Constructor to add StartDate
-	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate) {
+	public EmployeePayrollData(int id, int dept, String name, double salary, LocalDate startDate) {
 		this(id, name, salary);
+		this.dept = dept;
 		this.startDate = startDate;
 	}
 
 	// ToString method declaration
 	@Override
 	public String toString() {
-		return "id= " + id + ", name= " + name + ", salary= " + salary;
+		return "EmployeePayrollData [id=" + id + ", name=" + name + ", salary=" + salary + ", startDate=" + startDate
+				+ ", dept=" + dept + "]";
 	}
 
-	// Equals method
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -38,6 +41,8 @@ public class EmployeePayrollData {
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeePayrollData other = (EmployeePayrollData) obj;
+		if (dept != other.dept)
+			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -54,4 +59,5 @@ public class EmployeePayrollData {
 			return false;
 		return true;
 	}
+
 }

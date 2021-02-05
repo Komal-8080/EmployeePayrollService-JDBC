@@ -161,7 +161,7 @@ public class EmployeePayRollServiceJdbcTest {
 	public void givenNewEmployee_WhenAdded_SouldSyncWithDB() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		employeePayrollService.addEmployeeToPayroll("Mark", 500000.00,LocalDate.now(), "M");
+		employeePayrollService.addEmployeeToPayroll(101,"Mark", 500000.00,LocalDate.now(), "M");
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Mark");
 		Assert.assertTrue(result);
 	}	

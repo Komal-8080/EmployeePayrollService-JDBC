@@ -33,24 +33,23 @@ public class EmployeePayrollFileIOService {
 		}
 		return entries;
 	}
-	
+
 	public void printData() {
-	      try {
-	         Files.lines(new File(PAYROLL_FILE_NAME).toPath())
-	                 .forEach(System.out::println);
-	      }catch(IOException e) {
-	         e.printStackTrace();
-	      }
-	   }
-	   public List<EmployeePayrollData> readData(){
-	      List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-	      try{
-	         Files.lines(new File(PAYROLL_FILE_NAME).toPath())
-	                 .map(line->line.trim())
-	                 .forEach(line->System.out.println(line));
-	      }catch (IOException e){
-	         e.printStackTrace();
-	      }
-	      return employeePayrollList;
-	   }
+		try {
+			Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<EmployeePayrollData> readData() {
+		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+		try {
+			Files.lines(new File(PAYROLL_FILE_NAME).toPath()).map(line -> line.trim())
+					.forEach(line -> System.out.println(line));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollList;
+	}
 }

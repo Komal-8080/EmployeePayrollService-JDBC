@@ -127,8 +127,8 @@ public class EmployeePayRollServiceJdbc {
 		return null;
 	}
 	
-	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) throws SQLException {
-		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender));
+	public void addEmployeeToPayroll(int dept, String name, double salary, LocalDate startDate, String gender) throws SQLException {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(dept,name, salary, startDate, gender));
 	}
 
 }
