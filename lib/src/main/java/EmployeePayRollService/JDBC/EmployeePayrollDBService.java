@@ -240,4 +240,15 @@ public class EmployeePayrollDBService {
 		}
 		return employeePayrollData;
 	}
+
+	public int removeEmployeeFromPayroll(String name) {
+		String sql = String.format("update employee_payroll set is_active = 'false' where name = '%s';", name);
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			return statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;	
+	}
 }

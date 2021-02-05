@@ -79,7 +79,7 @@ public class EmployeePayRollServiceJdbcTest {
 		System.out.println(employeePayrollData.size());
 		Assert.assertEquals(3, employeePayrollData.size());
 	}
-	
+
 	@Test
 	public void givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
@@ -89,82 +89,94 @@ public class EmployeePayRollServiceJdbcTest {
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
 	}
-	
+
 	@Test
 	public void givenDateRange_WhenRetirieved_ShouldMatchEmployeeCount() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		LocalDate startDate = LocalDate.of(2018,01, 01);
+		LocalDate startDate = LocalDate.of(2018, 01, 01);
 		LocalDate endDate = LocalDate.now();
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService
-				.readEmployeePayrollForDateRange(EmployeePayRollServiceJdbc.IOService.DB_IO,startDate,endDate);
+				.readEmployeePayrollForDateRange(EmployeePayRollServiceJdbc.IOService.DB_IO, startDate, endDate);
 		System.out.println(employeePayrollData.size());
-		Assert.assertEquals(3, employeePayrollData.size());		
+		Assert.assertEquals(3, employeePayrollData.size());
 	}
-	
+
 	@Test
 	public void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Map<String, Double> averageSalaryByGender = employeePayrollService.readAverageSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> averageSalaryByGender = employeePayrollService
+				.readAverageSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		System.out.println(averageSalaryByGender.get("M"));
 		System.out.println(averageSalaryByGender.get("F"));
-		Assert.assertTrue(averageSalaryByGender.get("M").equals(300000.0) &&
-				averageSalaryByGender.get("F").equals(300000.00));
+		Assert.assertTrue(
+				averageSalaryByGender.get("M").equals(300000.0) && averageSalaryByGender.get("F").equals(300000.00));
 	}
-	
+
 	@Test
 	public void givenPayrollData_WhenSumOFSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Map<String, Double> sumOfSalaryByGender = employeePayrollService.readSumOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> sumOfSalaryByGender = employeePayrollService
+				.readSumOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		System.out.println(sumOfSalaryByGender.get("M"));
 		System.out.println(sumOfSalaryByGender.get("F"));
-		Assert.assertTrue(sumOfSalaryByGender.get("M").equals(600000.0) &&
-				sumOfSalaryByGender.get("F").equals(300000.0));
+		Assert.assertTrue(
+				sumOfSalaryByGender.get("M").equals(600000.0) && sumOfSalaryByGender.get("F").equals(300000.0));
 	}
-	
+
 	@Test
 	public void givenPayrollData_WhenCountOFSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Map<String, Double> countOfSalaryByGender = employeePayrollService.readCountOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> countOfSalaryByGender = employeePayrollService
+				.readCountOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		System.out.println(countOfSalaryByGender.get("M"));
 		System.out.println(countOfSalaryByGender.get("F"));
-		Assert.assertTrue(countOfSalaryByGender.get("M").equals(3.0) &&
-				countOfSalaryByGender.get("F").equals(1.0));
+		Assert.assertTrue(countOfSalaryByGender.get("M").equals(3.0) && countOfSalaryByGender.get("F").equals(1.0));
 	}
-	
+
 	@Test
 	public void givenPayrollData_WhenMaxOfSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Map<String, Double> maxOfSalaryByGender = employeePayrollService.readMaxOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> maxOfSalaryByGender = employeePayrollService
+				.readMaxOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		System.out.println(maxOfSalaryByGender.get("M"));
 		System.out.println(maxOfSalaryByGender.get("F"));
-		Assert.assertTrue(maxOfSalaryByGender.get("M").equals(500000.0) &&
-				maxOfSalaryByGender.get("F").equals(300000.00));
+		Assert.assertTrue(
+				maxOfSalaryByGender.get("M").equals(500000.0) && maxOfSalaryByGender.get("F").equals(300000.00));
 	}
-	
+
 	@Test
 	public void givenPayrollData_WhenMinOfSalaryRetrievedByGender_ShouldReturnProperValue() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		Map<String, Double> minOfSalaryByGender = employeePayrollService.readMinOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Map<String, Double> minOfSalaryByGender = employeePayrollService
+				.readMinOfSalaryByGender(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		System.out.println(minOfSalaryByGender.get("M"));
 		System.out.println(minOfSalaryByGender.get("F"));
-		Assert.assertTrue(minOfSalaryByGender.get("M").equals(100000.0) &&
-				minOfSalaryByGender.get("F").equals(300000.00));
+		Assert.assertTrue(
+				minOfSalaryByGender.get("M").equals(100000.0) && minOfSalaryByGender.get("F").equals(300000.00));
 	}
-	
+
 	@Test
 	public void givenNewEmployee_WhenAdded_SouldSyncWithDB() throws SQLException {
 		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
 		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
-		employeePayrollService.addEmployeeToPayroll(101,"Mark", 500000.00,LocalDate.now(), "M");
+		employeePayrollService.addEmployeeToPayroll(101, "Mark", 500000.00, LocalDate.now(), "M");
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Mark");
 		Assert.assertTrue(result);
 	}
+
+	@Test
+	public void givenEmployee_WhenRemoved_ShouldMatch() throws SQLException {
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
+		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		employeePayrollService.removeEmployeeFromPayrollService("Bill");
+		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Bill");
+		System.out.println(result);
+		Assert.assertFalse(result);
+	}
 }
-
-

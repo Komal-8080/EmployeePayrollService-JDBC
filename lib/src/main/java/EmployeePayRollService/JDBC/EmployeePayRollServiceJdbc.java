@@ -21,13 +21,13 @@ public class EmployeePayRollServiceJdbc {
 	public EmployeePayRollServiceJdbc() {
 		employeePayrollDBService = EmployeePayrollDBService.getInstance();
 	}
-	
+
 	// Employee pay roll service Constructor
 	public EmployeePayRollServiceJdbc(List<EmployeePayrollData> employeePayrollList) {
 		this();
 		this.employeePayrollList = employeePayrollList;
 	}
-	
+
 	// Read method to take employee data from console
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.print("Enter Employee ID: ");
@@ -79,56 +79,50 @@ public class EmployeePayRollServiceJdbc {
 				.filter(employeePayrollDataItem -> employeePayrollDataItem.name.equals(name)).findFirst().orElse(null);
 	}
 
-	/*public long readEmployeePayrollData(IOService ioService) {
-		if (ioService.equals(IOService.FILE_IO))
-			this.employeePayrollList = new EmployeePayrollFileIOService().readData();
-		return employeePayrollList.size();
-	}
-
-	/*public void printData(IOService ioService) {
-		if (ioService.equals(IOService.FILE_IO))
-			new EmployeePayrollFileIOService().printData();
-	}*/
-	
 	public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate,
 			LocalDate endDate) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getEmployeePayrollForDateRange(startDate, endDate);
 		return null;
 	}
-	
+
 	public Map<String, Double> readAverageSalaryByGender(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getAverageSalaryByGender();
 		return null;
 	}
-	
+
 	public Map<String, Double> readSumOfSalaryByGender(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getSumOfSalaryByGender();
 		return null;
 	}
-	
+
 	public Map<String, Double> readCountOfSalaryByGender(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getCountOfSalaryByGender();
 		return null;
 	}
 
 	public Map<String, Double> readMaxOfSalaryByGender(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getMaxOfSalaryByGender();
 		return null;
 	}
 
 	public Map<String, Double> readMinOfSalaryByGender(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if (ioService.equals(IOService.DB_IO))
 			return employeePayrollDBService.getMinOfSalaryByGender();
 		return null;
 	}
-	
-	public void addEmployeeToPayroll(int dept, String name, double salary, LocalDate startDate, String gender) throws SQLException {
-		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(dept,name, salary, startDate, gender));
+
+	public void addEmployeeToPayroll(int dept, String name, double salary, LocalDate startDate, String gender)
+			throws SQLException {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(dept, name, salary, startDate, gender));
+	}
+
+	public void removeEmployeeFromPayrollService(String name) {
+		employeePayrollDBService.removeEmployeeFromPayroll(name);
 	}
 
 }
