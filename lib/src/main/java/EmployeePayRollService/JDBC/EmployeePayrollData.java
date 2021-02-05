@@ -10,6 +10,7 @@ public class EmployeePayrollData {
 	public double salary;
 	public LocalDate startDate;
 	public int dept;
+	public String gender;
 
 	// Constructor for employee data
 	public EmployeePayrollData(Integer id, String name, Double salary) {
@@ -23,6 +24,11 @@ public class EmployeePayrollData {
 		this(id, name, salary);
 		this.dept = dept;
 		this.startDate = startDate;
+	}
+	
+	public EmployeePayrollData(int id,  int dept, String name, String gender, double salary, LocalDate startDate) {
+		this(id, dept,name, salary, startDate);
+		this.gender = gender;
 	}
 
 	// ToString method declaration
@@ -60,4 +66,5 @@ public class EmployeePayrollData {
 		return true;
 	}
 
+	
 }

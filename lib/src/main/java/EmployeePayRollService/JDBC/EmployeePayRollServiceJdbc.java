@@ -49,9 +49,10 @@ public class EmployeePayRollServiceJdbc {
 	}
 
 	public long countEntries(IOService ioService) {
-		if (ioService.equals(IOService.FILE_IO))
-			return new EmployeePayrollFileIOService().countEntries();
-		return 0;
+		//if (ioService.equals(IOService.FILE_IO))
+		//	return new EmployeePayrollFileIOService().countEntries();
+		//System.out.println(employeePayrollList.size());
+		return employeePayrollList.size();
 	}
 
 	public List<EmployeePayrollData> readEmployeePayrollServiceData(IOService ioService) throws SQLException {
@@ -124,5 +125,21 @@ public class EmployeePayRollServiceJdbc {
 	public void removeEmployeeFromPayrollService(String name) {
 		employeePayrollDBService.removeEmployeeFromPayroll(name);
 	}
+
+	public void addEmployeesToPayroll(List<EmployeePayrollData> employeePayrollDataList) {
+		employeePayrollDataList.forEach(employeePayrollData -> {
+			System.out.println("Employee Being Added: " + employeePayrollData.name);
+			try {
+				this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name, employeePayrollData.salary,
+						employeePayrollData.startDate, employeePayrollData.gender);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Employee Added: " + employeePayrollData.name);
+		});
+		System.out.println(this.employeePayrollList);
+	}
+
 
 }

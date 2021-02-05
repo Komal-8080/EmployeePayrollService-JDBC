@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -178,5 +180,23 @@ public class EmployeePayRollServiceJdbcTest {
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Bill");
 		System.out.println(result);
 		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void given6Employees_WhenAddedToDB_ShouldMatchEmployeeEntries() throws SQLException {
+		EmployeePayrollData[] arrayOfEmps = {
+				new EmployeePayrollData(0, 101, "Jeff Becoz", "M", 100000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 102, "Bill Gates", "M", 200000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 103, "Mark", "M", 300000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 101, "Sunder", "M", 600000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 103, "Mukesh", "M", 100000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 104, "Anil", "M", 200000.0, LocalDate.now()) };
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc();
+		employeePayrollService.readEmployeePayrollServiceData(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Instant start = Instant.now();
+		employeePayrollService.addEmployeesToPayroll(Arrays.asList(arrayOfEmps));
+		Instant end = Instant.now();
+		System.out.println("Duration without Thread: " + Duration.between(start, end));
+		Assert.assertEquals(8, employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.FILE_IO));
 	}
 }
