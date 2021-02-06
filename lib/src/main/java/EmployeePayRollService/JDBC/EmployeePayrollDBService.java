@@ -45,7 +45,7 @@ public class EmployeePayrollDBService {
 		return this.getEmployeePayrollDataUsingDB(sql);
 	}
 
-	private synchronized Connection getConnection() {
+	private Connection getConnection() {
 		connectionCounter++;
 		String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
 		String userName = "root";
