@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import EmployeePayrollService.Thread;
 
 public class EmployeePayRollServiceJdbc {
 
@@ -145,27 +144,18 @@ public class EmployeePayRollServiceJdbc {
 	}
 
 	public void addEmployeesToPayrollWithThreads(List<EmployeePayrollData> employeePayrollDataList) {
-		/*
-		 * Map<Integer, Boolean> employeeAdditionStatus = new HashMap<Integer,
-		 * Boolean>(); employeePayrollDataList.forEach(employeePayrollData -> { Runnable
-		 * task = () -> { employeeAdditionStatus.put(employeePayrollData.hashCode(),
-		 * false); System.out.println("Employee:Being Added: "
-		 * +Thread.currentThread().getName());); try {
-		 * this.addEmployeeToPayroll(employeePayrollData.dept,employeePayrollData.name,
-		 * employeePayrollData.salary, employeePayrollData.startDate,
-		 * employeePayrollData.gender); } catch (SQLException e) { e.printStackTrace();
-		 * } employeeAdditionStatus.put(employeePayrollData.hashCode(), true);
-		 * System.out.println("Employee Added:" +Thread.currentThread().getName()); };
-		 * Thread thread = new Thread(task, employeePayrollData.name); thread.start();
-		 * }); }
-		 */
 		Map<Integer, Boolean> employeeAdditionStatus = new HashMap<Integer, Boolean>();
 		employeePayrollDataList.forEach(employeePayrollData -> {
 			Runnable task = () -> {
 				employeeAdditionStatus.put(employeePayrollData.hashCode(), false);
 				System.out.println("Employee Being Added: " + Thread.currentThread().getName());
-				this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name,
-						employeePayrollData.salary, employeePayrollData.startDate, employeePayrollData.gender);
+				try {
+					this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name,
+							employeePayrollData.salary, employeePayrollData.startDate, employeePayrollData.gender);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				employeeAdditionStatus.put(employeePayrollData.hashCode(), false);
 				System.out.println("Employee Added: " + employeePayrollData.name);
 			};
