@@ -2,6 +2,7 @@ package EmployeePayRollService.JDBC;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class EmployeePayrollData {
 
@@ -36,6 +37,11 @@ public class EmployeePayrollData {
 	public String toString() {
 		return "EmployeePayrollData [id=" + id + ", name=" + name + ", salary=" + salary + ", startDate=" + startDate
 				+ ", dept=" + dept + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(dept,name,salary,startDate);
 	}
 
 	@Override

@@ -197,6 +197,10 @@ public class EmployeePayRollServiceJdbcTest {
 		employeePayrollService.addEmployeesToPayroll(Arrays.asList(arrayOfEmps));
 		Instant end = Instant.now();
 		System.out.println("Duration without Thread: " + Duration.between(start, end));
-		Assert.assertEquals(8, employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.FILE_IO));
+		Instant threadStart = Instant.now();
+		employeePayrollService.addEmployeesToPayrollWithThreads(Arrays.asList(arrayOfEmps));
+		Instant threadEnd = Instant.now();
+		System.out.println("Duration with Thread: " + Duration.between(threadStart, threadEnd));
+		Assert.assertEquals(15, employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.FILE_IO));
 	}
 }

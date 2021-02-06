@@ -3,9 +3,12 @@ package EmployeePayRollService.JDBC;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import EmployeePayrollService.Thread;
 
 public class EmployeePayRollServiceJdbc {
 
@@ -49,9 +52,9 @@ public class EmployeePayRollServiceJdbc {
 	}
 
 	public long countEntries(IOService ioService) {
-		//if (ioService.equals(IOService.FILE_IO))
-		//	return new EmployeePayrollFileIOService().countEntries();
-		//System.out.println(employeePayrollList.size());
+		// if (ioService.equals(IOService.FILE_IO))
+		// return new EmployeePayrollFileIOService().countEntries();
+		// System.out.println(employeePayrollList.size());
 		return employeePayrollList.size();
 	}
 
@@ -130,8 +133,8 @@ public class EmployeePayRollServiceJdbc {
 		employeePayrollDataList.forEach(employeePayrollData -> {
 			System.out.println("Employee Being Added: " + employeePayrollData.name);
 			try {
-				this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name, employeePayrollData.salary,
-						employeePayrollData.startDate, employeePayrollData.gender);
+				this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name,
+						employeePayrollData.salary, employeePayrollData.startDate, employeePayrollData.gender);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,5 +144,42 @@ public class EmployeePayRollServiceJdbc {
 		System.out.println(this.employeePayrollList);
 	}
 
+	public void addEmployeesToPayrollWithThreads(List<EmployeePayrollData> employeePayrollDataList) {
+		/*
+		 * Map<Integer, Boolean> employeeAdditionStatus = new HashMap<Integer,
+		 * Boolean>(); employeePayrollDataList.forEach(employeePayrollData -> { Runnable
+		 * task = () -> { employeeAdditionStatus.put(employeePayrollData.hashCode(),
+		 * false); System.out.println("Employee:Being Added: "
+		 * +Thread.currentThread().getName());); try {
+		 * this.addEmployeeToPayroll(employeePayrollData.dept,employeePayrollData.name,
+		 * employeePayrollData.salary, employeePayrollData.startDate,
+		 * employeePayrollData.gender); } catch (SQLException e) { e.printStackTrace();
+		 * } employeeAdditionStatus.put(employeePayrollData.hashCode(), true);
+		 * System.out.println("Employee Added:" +Thread.currentThread().getName()); };
+		 * Thread thread = new Thread(task, employeePayrollData.name); thread.start();
+		 * }); }
+		 */
+		Map<Integer, Boolean> employeeAdditionStatus = new HashMap<Integer, Boolean>();
+		employeePayrollDataList.forEach(employeePayrollData -> {
+			Runnable task = () -> {
+				employeeAdditionStatus.put(employeePayrollData.hashCode(), false);
+				System.out.println("Employee Being Added: " + Thread.currentThread().getName());
+				this.addEmployeeToPayroll(employeePayrollData.dept, employeePayrollData.name,
+						employeePayrollData.salary, employeePayrollData.startDate, employeePayrollData.gender);
+				employeeAdditionStatus.put(employeePayrollData.hashCode(), false);
+				System.out.println("Employee Added: " + employeePayrollData.name);
+			};
+			Thread thread = new Thread(task, employeePayrollData.name);
+			thread.start();
+		});
+		while (employeeAdditionStatus.containsValue(false)) {
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(this.employeePayrollList);
 
+	}
 }
