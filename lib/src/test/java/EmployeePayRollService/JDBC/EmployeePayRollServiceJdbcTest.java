@@ -243,7 +243,7 @@ public class EmployeePayRollServiceJdbcTest {
 	}
 
 	@Test
-	public void employeesWhenAddedShouldReturnTrue() {
+	public void newEmployeesWhenAddedShouldReturnPassTest() {
 		EmployeePayrollData employeePayrollData1 = new EmployeePayrollData(0, 104, "Anil", "M", 200000.0,
 				LocalDate.now());
 		Response response = addEmployee(employeePayrollData1);
@@ -254,5 +254,23 @@ public class EmployeePayRollServiceJdbcTest {
 				Arrays.asList(employeePayrollData));
 		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Assert.assertEquals(3, count);
+	}
+
+	@Test
+	public void multipleNewEmployeesWhenAddedShouldReturnPassTest() {
+		EmployeePayrollData[] arrayOfEmps = {
+				new EmployeePayrollData(0, 101, "Jeff Becoz", "M", 100000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 102, "Bill Gates", "M", 200000.0, LocalDate.now()),
+				new EmployeePayrollData(0, 103, "Mark", "M", 300000.0, LocalDate.now()) };
+		for (EmployeePayrollData employeePayrollData : arrayOfEmps) {
+			Response response = addEmployee(employeePayrollData);
+			int status = response.getStatusCode();
+			Assert.assertEquals(201, status);
+		}
+		EmployeePayrollData[] employeePayrollData = getEmployees();
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
+				Arrays.asList(employeePayrollData));
+		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Assert.assertEquals(6, count);
 	}
 }
