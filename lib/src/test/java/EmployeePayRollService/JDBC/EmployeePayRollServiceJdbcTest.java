@@ -13,7 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import com.google.gson.Gson;
+//import com.mysql.fabric.Response;
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
 
 public class EmployeePayRollServiceJdbcTest {
 
@@ -202,5 +208,28 @@ public class EmployeePayRollServiceJdbcTest {
 		Instant threadEnd = Instant.now();
 		System.out.println("Duration with Thread: " + Duration.between(threadStart, threadEnd));
 		Assert.assertEquals(8, employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.FILE_IO));
+	}
+
+	@Before
+	public void setup() {
+		RestAssured.baseURI = "http://localhost";
+		RestAssured.port = 4000;
+	}
+
+	public EmployeePayrollData[] getEmployees() {
+		Response response = RestAssured.get("/employees/list");
+		System.out.println(response.asString());
+		EmployeePayrollData[] employeePayrollData = new Gson().fromJson(response.toString(),
+				EmployeePayrollData[].class);
+		return employeePayrollData;
+	}
+
+	@Test
+	public void givenEmployeeDataInJSONServer_WhenRetrieved_ShouldMatchCount() {
+		EmployeePayrollData[] employeePayrollData = getEmployees();
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
+				Arrays.asList(employeePayrollData));
+		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Assert.assertEquals(2, count);
 	}
 }
