@@ -224,6 +224,15 @@ public class EmployeePayRollServiceJdbcTest {
 		return employeePayrollData;
 	}
 
+	public Response addEmployee(EmployeePayrollData employeePayrollData) {
+		String empJSon = new Gson().toJson(employeePayrollData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(empJSon);
+		return request.post("/employees/create");
+
+	}
+
 	@Test
 	public void givenEmployeeDataInJSONServer_WhenRetrieved_ShouldMatchCount() {
 		EmployeePayrollData[] employeePayrollData = getEmployees();
@@ -231,5 +240,19 @@ public class EmployeePayRollServiceJdbcTest {
 				Arrays.asList(employeePayrollData));
 		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Assert.assertEquals(2, count);
+	}
+
+	@Test
+	public void employeesWhenAddedShouldReturnTrue() {
+		EmployeePayrollData employeePayrollData1 = new EmployeePayrollData(0, 104, "Anil", "M", 200000.0,
+				LocalDate.now());
+		Response response = addEmployee(employeePayrollData1);
+		int status = response.getStatusCode();
+		Assert.assertEquals(201, status);
+		EmployeePayrollData[] employeePayrollData = getEmployees();
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
+				Arrays.asList(employeePayrollData));
+		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
+		Assert.assertEquals(3, count);
 	}
 }
