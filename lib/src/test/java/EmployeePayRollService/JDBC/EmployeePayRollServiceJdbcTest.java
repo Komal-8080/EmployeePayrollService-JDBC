@@ -273,20 +273,37 @@ public class EmployeePayRollServiceJdbcTest {
 		long count = employeePayrollService.countEntries(EmployeePayRollServiceJdbc.IOService.DB_IO);
 		Assert.assertEquals(6, count);
 	}
-	
+
 	@Test
-    public void givenNameShouldUpdateDept() {
-        EmployeePayrollData[] employeePayrollData = getEmployees();
-        EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
+	public void givenEmployeeNameShouldUpdateEmployeeSalary() {
+		EmployeePayrollData[] employeePayrollData = getEmployees();
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
 				Arrays.asList(employeePayrollData));
-        employeePayrollService.updateEmployeeSalary("Bill Gates", 500000.00 );
-        EmployeePayrollData employeePayrollData1 = employeePayrollService.getEmployeePayrollData("Bill Gates");
-        String empJSon = new Gson().toJson(employeePayrollData);
-        RequestSpecification request = RestAssured.given();
-        request.header("Content-Type", "application/json");
-        request.body(empJSon);
-        Response response = request.put("/employees/update/" + employeePayrollData1.id);
-        int status = response.getStatusCode();
-        Assert.assertEquals(201, status);
-    }
+		employeePayrollService.updateEmployeeSalary("Bill Gates", 500000.00);
+		EmployeePayrollData employeePayrollData1 = employeePayrollService.getEmployeePayrollData("Bill Gates");
+		String empJSon = new Gson().toJson(employeePayrollData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(empJSon);
+		Response response = request.put("/employees/update/" + employeePayrollData1.id);
+		int status = response.getStatusCode();
+		Assert.assertEquals(201, status);
+	}
+
+	@Test
+	public void givenEmployeeNameShouldDeleteDeleteEmployee() {
+		EmployeePayrollData[] employeePayrollData = getEmployees();
+		EmployeePayRollServiceJdbc employeePayrollService = new EmployeePayRollServiceJdbc(
+				Arrays.asList(employeePayrollData));
+		EmployeePayrollData employeePayrollData1 = employeePayrollService.getEmployeePayrollData("Bill Gates");
+		String empJSon = new Gson().toJson(employeePayrollData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(empJSon);
+		Response response = request.delete("/employees/delete/" + employeePayrollData1.id);
+		int status = response.getStatusCode();
+		Assert.assertEquals(201, status);
+		EmployeePayrollData[] employeePayrollData2 = getEmployees();
+		Assert.assertEquals(7, employeePayrollData2.length);
+	}
 }
