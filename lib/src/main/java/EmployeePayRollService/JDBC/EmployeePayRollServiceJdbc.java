@@ -77,7 +77,7 @@ public class EmployeePayRollServiceJdbc {
 			employeePayrollData.salary = salary;
 	}
 
-	private EmployeePayrollData getEmployeePayrollData(String name) {
+	public  EmployeePayrollData getEmployeePayrollData(String name) {
 		return this.employeePayrollList.stream()
 				.filter(employeePayrollDataItem -> employeePayrollDataItem.name.equals(name)).findFirst().orElse(null);
 	}
